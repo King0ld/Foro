@@ -11,5 +11,5 @@ if (isset($_GET['view'])) {
 }else{
   include('core/controllers/indexController.php');
 }
-ss
+
 ?>

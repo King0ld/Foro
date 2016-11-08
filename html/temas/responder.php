@@ -11,19 +11,11 @@
   <?php
 
   if(isset($_GET['error'])) {
-    if($_GET['error'] == 1) {
-      echo '<div class="alert alert-dismissible alert-danger">
-        <strong>Error!</strong></strong> todos los campos deben estar llenos.
+
+    echo '<div class="alert alert-dismissible alert-danger">
+      <strong>Error!</strong></strong> todos los campos deben estar llenos.
       </div>';
-    } else if ($_GET['error'] == 2) {
-      echo '<div class="alert alert-dismissible alert-danger">
-        <strong>Error!</strong></strong> el título del tema debe tener al menos '. MIN_TITULOS_TEMAS_LONGITUD .' caracteres.
-      </div>';
-    } else {
-      echo '<div class="alert alert-dismissible alert-danger">
-        <strong>Error!</strong></strong> el contenido del tema debe tener al menos '.  MIN_CONTENT_TEMAS_LONGITUD .' caracteres.
-      </div>';
-    }
+
   }
   ?>
 
@@ -36,37 +28,23 @@
 
 <div class="row categorias_con_foros">
   <div class="col-sm-12">
-      <div class="row titulo_categoria">Crear un nuevo tema en <span style="color: rgb(119, 241, 83); font-weight: bold;"> <?php echo $_foros[$id_foro]['nombre'] ?> </span></div>
+      <div class="row titulo_categoria">Respondiendo el tema: <span style="color: rgb(119, 241, 83); font-weight: bold;"> <?php echo $tema['titulo'] ?> </span></div>
 
       <div class="row cajas">
         <div class="col-md-9">
-          <form class="form-horizontal" action="?view=temas&mode=add&id_foro=<?php echo $id_foro ?>" method="POST" enctype="application/x-www-form-urlencoded">
+          <form class="form-horizontal" action="?view=temas&mode=responder&id_foro=<?php echo $id_foro ?>&id=<?php echo $_GET['id']; ?>" method="POST" enctype="application/x-www-form-urlencoded">
             <fieldset>
-              <div class="form-group">
-                <label for="inputEmail" class="col-lg-2 control-label">Título</label>
-                <div class="col-lg-10">
-                  <input type="text" class="form-control" maxlength="250" name="titulo" placeholder="Nombre para el tema" required="">
-                </div>
-              </div>
               <div class="form-group">
                 <label for="inputEmail" class="col-lg-2 control-label">Contenido</label>
                 <div class="col-lg-10">
-                  <textarea class="form-control tema_textarea" name="content" placeholder="Contenido de tu tema, se acepta BBCode" required=""></textarea>
+                  <textarea class="form-control tema_textarea" name="content" placeholder="Contenido de tu respuesta, se acepta BBCode" required=""></textarea>
                 </div>
               </div>
-              <?php
-                if($_users[$_SESSION['app_id']]['permisos'] > 0) {
-                  echo '<div class="form-group">
-                    <label class="col-lg-2">&nbsp;</label>
-                    <label class="col-lg-10"><input type="checkbox" value="1" name="anuncio" /> Crear tema como anuncio</label>
-                  </div>';
-                }
-              ?>
 
               <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
                   <button type="reset" class="btn btn-default">Resetear</button>
-                  <button type="submit" class="btn btn-primary">Crear</button>
+                  <button type="submit" class="btn btn-primary">Responder</button>
                 </div>
               </div>
             </fieldset>

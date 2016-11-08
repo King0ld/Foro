@@ -28,10 +28,16 @@ if(isset($_GET['id_foro']) and array_key_exists($_GET['id_foro'],$_foros)){
       break;
     case 'edit':
       if($isset_id and $loged){
-        if($_POST){
-          $temas->Edit();
+        $tema = $temas->Check();
+        //Verificar si el arrelo $tema existe o no
+        if(false != $tema){
+          if($_POST){
+            $temas->Edit();
+          }else{
+            include(HTML_DIR . 'temas/edit_temas.php');
+          }
         }else{
-
+          header('Location index.php?view=index');
         }
       }else{
         header('Location index.php?view=index');
@@ -45,15 +51,29 @@ if(isset($_GET['id_foro']) and array_key_exists($_GET['id_foro'],$_foros)){
       }
     break;
     case 'close':
-      if($isset_id and $loged){
-        $temas->Close();
+        if($isset_id and $loged and isset($_GET['estado']) and in_array($_GET['estado'],[0,1])){
+        $temas->Close($_GET['estado']);
       }else{
-        header('Location index.php?view=index');
+        header('Location: index.php?view=index');
       }
     break;
-    case 'anuncio':
+    case 'responder':
       if($isset_id and $loged){
-        $temas->Anuncio();
+        $tema = $temas->Check();
+        //Verificar si el arrelo $tema existe o no
+        if(false != $tema){
+          if ($tema['tipo'] == 0) {
+            header('Location index.php?view=index');
+            exit;
+          }
+          if($_POST){
+            $temas->Responder();
+          }else{
+            include(HTML_DIR . 'temas/responder.php');
+          }
+        }else{
+          header('Location index.php?view=index');
+        }
       }else{
         header('Location index.php?view=index');
       }
@@ -63,6 +83,8 @@ if(isset($_GET['id_foro']) and array_key_exists($_GET['id_foro'],$_foros)){
         $tema = $temas->Check();
         //Verificar si el arrelo $tema existe o no
         if(false != $tema){
+          IncreaseVisitas($_GET['id']);
+          $respuestas = $temas->getRespuestas();
           //Visualizar tema
           include(HTML_DIR . 'temas/ver_temas.php');
         }else{

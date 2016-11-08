@@ -1,6 +1,6 @@
 <?php
 /*Author: Mario Junior Torres Perez
-  Date: Begin: 8/March/2016 - Developing
+  Date: Began: 8/March/2016 - Developing
   Account: MarioDev64
 */
 session_start();
@@ -43,6 +43,7 @@ require('core/bin/functions/UrlAmigable.php');
 require('core/bin/functions/BBcode.php');
 require('core/bin/functions/OnlineUsers.php');
 require('core/bin/functions/GetUserStatus.php');
+require('core/bin/functions/IncreaseVisitas.php');
 
 /*Variable que contiene todos los usuarios*/
 $_users = Users();
